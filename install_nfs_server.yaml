@@ -1,0 +1,53 @@
+---
+- hosts: nfs
+  become: true
+  tasks:
+  - name: Install nfs-server packages
+    yum:
+      name: nfs-utils
+      state: present
+
+  - name: Creating share directory
+    file:
+      path: /mnt/nfs_share
+      state: directory
+
+  - name: Change ownership of /mnt/nfs_share
+    file:
+      path: /mnt/nfs_share
+      owner: nobody
+      group: nobody
+      recurse: yes
+      state: directory
+    
+  - name: Set permissions for /mnt/nfs_share
+    file:
+      path: /mnt/nfs_share
+      mode: "0777"
+      recurse: yes
+
+  - name: Enable the nfs-server service
+    systemd:
+      name: nfs-server
+      state: enabled
+
+  - name: Start the nfs-server service
+    service:
+      name: nfs-server
+      state: started
+  
+  - name: Add NFS share to /etc/exports
+    lineinfile:
+      path: /etc/exports
+      line: "/mnt/nfs_share *(rw,sync,no_root_squash)"
+      create: yes
+      insertafter: EOF
+
+  - name: Exporting the nfs share
+    shell: exportfs
+
+  - name: Restarting nfs-server service
+    service:
+      name: nfs-server
+      state: restarted
+...
