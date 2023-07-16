@@ -27,7 +27,7 @@
       recurse: yes
 
   - name: Enable the nfs-server service
-    systemd:
+    service:
       name: nfs-server
       state: enabled
 
