@@ -17,7 +17,9 @@ pipeline{
 
         stage('Configuring NFS package into server'){
             steps{
-                sh "ansible-playbook install_nfs_server.yaml"
+                withCredentials([file(credentialsId: 'pemfile', variable: 'PEMFILE')]) {
+		   sh 'ansible-playbook install_nfs_server.yaml --private-key="$PEMFILE"'
+		}
             }
         }
     }
