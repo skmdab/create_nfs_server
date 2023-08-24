@@ -35,7 +35,7 @@ progress_bar() {
 
 INSTANCENAME=nfs
 
-INSTANCETYPE=t2.micro
+INSTANCETYPE=t3.micro
 
 AMI_ID=ami-01476f51d7bd844ee
 
