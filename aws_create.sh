@@ -37,13 +37,13 @@ INSTANCENAME=nfs
 
 INSTANCETYPE=t2.micro
 
-AMI_ID=ami-00f898fc5c0fb69d1
+AMI_ID=ami-01476f51d7bd844ee
 
-ZONE=subnet-0f7ec0ece3a873bb1
+ZONE=subnet-0a3721f48b6b71c75
 
 COUNTS=1
 
-INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-08a5b7d4856dedfe6 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
+INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-061211107774a3fc1 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
 
 echo "Creating $INSTANCENAME server"
 
